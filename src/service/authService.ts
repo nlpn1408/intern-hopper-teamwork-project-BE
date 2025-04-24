@@ -31,8 +31,6 @@ export const loginService = async (email: string, password: string) => {
   }
 };
 
-const prisma = new PrismaClient();
-
 export const create = async (email: string, password: string, username: string, role: { id: number } ) => {
         const user = await prisma.user.findUnique({
             where: { email: email }
