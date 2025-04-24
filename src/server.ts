@@ -10,7 +10,6 @@ app.use(json());
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
-app.use(authMiddleware)
 app.use('/api/auth', userRouter);
 app.get("/get_users", async (req: Request, res: Response) => {
   const users = await prisma.user.findMany();

@@ -30,7 +30,6 @@ export const loginService = async (email: string, password: string) => {
     throw error
   }
 };
-
 export const create = async (email: string, password: string, username: string, role: { id: number } ) => {
         const user = await prisma.user.findUnique({
             where: { email: email }
