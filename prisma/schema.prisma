@@ -15,12 +15,13 @@ datasource db {
 
 //db 
 model user {
-  id          Int           @id @default(autoincrement())
-  username    String        @unique
-  email       String        @unique
-  password    String
-  role_id     Int
-  role        role          @relation(fields: [role_id], references: [id])
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  email    String  @unique
+  password String
+  role_id  Int
+  status   Boolean @default(true)
+  role     role    @relation(fields: [role_id], references: [id])
 
   createdAt DateTime @default(now())
   createdBy Int?
