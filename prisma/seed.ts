@@ -23,8 +23,6 @@ async function seed() {
             }
         });
         console.log('Seeded role: ', userRole , " and ", adminRole);
-
-        // Thêm user mẫu
         const hashPasswordUser1:string = await bcrypt.hash('cang123', 12)
         const hashPasswordUser2:string = await bcrypt.hash('cang1234', 12)
         const user1 = await prisma.user.upsert({
