@@ -6,7 +6,7 @@ const publicApi = ["/auth/login", "/auth/signup"]
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     try {
 
-        //bỏ qua những public api 
+        //bỏ qua những public api //
         const checkPublicApi = publicApi.find(item => prefix + item === req.originalUrl);
         if (checkPublicApi) {
             console.log(checkPublicApi)
