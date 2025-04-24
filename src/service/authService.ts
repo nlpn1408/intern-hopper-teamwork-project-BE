@@ -1,11 +1,11 @@
 import { user } from "@prisma/client";
 import prisma from "../config/database";
 import bcrypt from "bcryptjs"
-const jwt = require("jsonwebtoken")
 import { log } from "console";
 const apikey = process.env.APIKEY
 const jwtExpire = process.env.JWT_EXPIRE
-
+const jwt = require("jsonwebtoken")
+import { PrismaClient } from '@prisma/client';
 export const loginService = async (email: string, password: string) => {
   try {
     const userLogin = await prisma.user.findUnique({
@@ -30,3 +30,26 @@ export const loginService = async (email: string, password: string) => {
     throw error
   }
 };
+
+const prisma = new PrismaClient();
+
+export const create = async (email: string, password: string, username: string, role: { id: number } ) => {
+        const user = await prisma.user.findUnique({
+            where: { email: email }
+        });
+        const hashedPassword = await bcrypt.hash(password, 12);
+        const newuser = await prisma.user.create({
+            data: {
+                email,
+                password: hashedPassword,
+                username,
+                role_id: role.id,
+            }
+        })
+        return newuser;
+    }
+
+
+export default {
+    create,
+ };
