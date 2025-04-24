@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import prisma from './config/database';
 import userRouter from './routes/user.routes';
-import seedRoute from './routes/seed.route';
+
 
 const app: express.Application = express();
 const port: number = Number(process.env.PORT) || 3001;
@@ -12,7 +12,6 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
 app.use('/api/auth', userRouter);
-app.use('/api', seedRoute);
 app.get('/get_users', async (req: Request, res: Response) => {
   try {
     const users = await prisma.user.findMany();
