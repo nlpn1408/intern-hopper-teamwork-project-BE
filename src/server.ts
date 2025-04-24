@@ -2,12 +2,12 @@ import express, { json, Request, Response } from "express";
 import prisma from "./config/database";
 import authRoute from "./routes/authRoutes";
 import authMiddleware from "./middlewares/auth.middleware";
-
+const cors = require("cors");
 const app: express.Application = express();
 const port: number = 3001;
 const prefix: string = String(process.env.PREFIX);
 app.use(json());
-
+app.use(cors());
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
