@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import UserService from '../services/authService';
 import { CreateUserSchema } from '../validations/user.validation';
 import prisma from '../config/database';
-class UserController {
-  async createUser(req: Request, res: Response) {
+
+export const createUser = async (req: Request, res: Response)=> {
     try {
       const parsed = CreateUserSchema.safeParse(req.body);
       if (!parsed.success) {
@@ -40,6 +40,8 @@ class UserController {
       });
     }
   }
-}
 
-export default new UserController();
+
+export default {
+  createUser,
+};

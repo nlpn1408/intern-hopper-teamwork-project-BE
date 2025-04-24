@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
-class UserService {
-    async create (email: string, password: string, username: string, role: { id: number } ){
+
+export const create = async (email: string, password: string, username: string, role: { id: number } ) => {
         const user = await prisma.user.findUnique({
             where: { email: email }
         });
@@ -17,5 +17,8 @@ class UserService {
         })
         return newuser;
     }
-}
-export default new UserService();
+
+
+export default {
+    create,
+    };
