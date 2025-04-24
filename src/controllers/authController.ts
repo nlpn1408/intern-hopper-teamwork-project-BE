@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import UserService from '../services/user.service';
+import UserService from '../services/authService';
 import { CreateUserSchema } from '../validations/user.validation';
 import prisma from '../config/database';
-
 class UserController {
   async createUser(req: Request, res: Response) {
     try {
