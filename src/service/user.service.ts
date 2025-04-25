@@ -1,9 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export const getAllUsers = async () => {
+// Get danh sách user có phân trang
+export const getAllUsers = async (skip: number, limit: number) => {
   return prisma.user.findMany({
     where: { deleted: false },
+    skip,
+    take: limit,
+    orderBy: { createdAt: 'desc' },
     select: {
       id: true,
       username: true,
@@ -15,6 +19,13 @@ export const getAllUsers = async () => {
     },
   });
 };
+
+export const countUsers = async () => {
+  return prisma.user.count({
+    where: { deleted: false },
+  });
+};
+
 
 export const deleteUserById = async (id: string): Promise<boolean> => {
   const user = await prisma.user.findUnique({ where: { id: Number(id) } });
@@ -52,4 +63,5 @@ export default {
   deleteUserById,
   getAllUsers,
   getUserById,
+  countUsers
 };

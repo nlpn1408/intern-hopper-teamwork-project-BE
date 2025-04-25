@@ -3,15 +3,31 @@ import userService from '../service/user.service';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
-export const getAllUsers = async (_req: Request, res: Response) => {
+export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const users = await userService.getAllUsers();
-    return res.json(users);
+    
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const skip = (page - 1) * limit;
+
+    const users = await userService.getAllUsers(skip, limit);
+    const totalUsers = await userService.countUsers(); 
+
+    return res.json({
+      data: users,
+      pagination: {
+        total: totalUsers,
+        page,
+        limit,
+        totalPages: Math.ceil(totalUsers / limit),
+      },
+    });
   } catch (error) {
     console.error('Error getting users:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
