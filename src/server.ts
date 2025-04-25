@@ -18,7 +18,6 @@ app.use(cors({
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
-// app.use(authMiddleware)
 app.use('/api/auth', userRouter);
 app.use('/api/users', userRoutes);
 app.get("/get_users", async (req: Request, res: Response) => {
