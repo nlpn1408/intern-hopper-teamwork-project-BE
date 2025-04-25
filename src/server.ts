@@ -3,10 +3,11 @@ import prisma from "./config/database";
 import authRoute from "./routes/authRoutes";
 import authMiddleware from "./middlewares/auth.middleware";
 import userRouter from './routes/authRoutes';
+import update from './routes/UpdateUserRoutes';
 import cors from "cors";
 
 const app: express.Application = express();
-const port: number = 3001;
+const port: number = 3004;
 const prefix: string = String(process.env.PREFIX);
 app.use(json());
 app.use(cors({
@@ -17,7 +18,7 @@ app.use(cors({
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
-app.use(authMiddleware)
+app.use('/api', update)
 app.use('/api/auth', userRouter);
 app.get("/get_users", async (req: Request, res: Response) => {
   const users = await prisma.user.findMany();
@@ -31,4 +32,9 @@ app.use(prefix, authRoute);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
+}).on('error', (err: any) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${port} đã được sử dụng. Vui lòng chọn cổng khác hoặc tắt tiến trình chiếm cổng.`);
+    process.exit(1);
+  }
 });
