@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -11,7 +12,7 @@ export const updateUser = async (req: Request, res: Response) => {
   if (!username || !email || !password) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
-
+  const hashedPassword = await bcrypt.hash(password, 10);
   try {
     const existingUser = await prisma.user.findUnique({
       where: { id: userId },
@@ -27,7 +28,7 @@ export const updateUser = async (req: Request, res: Response) => {
       data: {
         email,
         username,
-        password,
+        password: hashedPassword, 
         role_id,
         updatedAt: new Date(),
         updatedBy: updatedBy || null,
