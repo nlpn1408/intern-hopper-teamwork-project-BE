@@ -6,7 +6,7 @@ import userRouter from './routes/authRoutes';
 import cors from "cors";
 
 const app: express.Application = express();
-const port: number = 3001;
+const port: number = 3002;
 const prefix: string = String(process.env.PREFIX);
 app.use(json());
 app.use(cors({
