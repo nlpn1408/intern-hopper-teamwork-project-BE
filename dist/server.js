@@ -48,10 +48,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
 const database_1 = __importDefault(require("./config/database"));
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
-const user_routes_1 = __importDefault(require("./routes/user.routes"));
+const auth_middleware_1 = __importDefault(require("./middlewares/auth.middleware"));
+const authRoutes_2 = __importDefault(require("./routes/authRoutes"));
+const UpdateUserRoutes_1 = __importDefault(require("./routes/UpdateUserRoutes"));
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
-const port = 3001;
+const port = 3002;
 const prefix = String(process.env.PREFIX);
 app.use((0, express_1.json)());
 app.use((0, cors_1.default)({
@@ -62,8 +64,9 @@ app.use((0, cors_1.default)({
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
-app.use('/api', user_routes_1.default);
-app.use('/api/auth', authRoutes_1.default);
+app.use(auth_middleware_1.default);
+app.use('/api', UpdateUserRoutes_1.default);
+app.use('/api/auth', authRoutes_2.default);
 app.get("/get_users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield database_1.default.user.findMany();
     res.status(200).json({
