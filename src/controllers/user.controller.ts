@@ -61,8 +61,6 @@ export const updateUser = async (req: Request, res: Response) => {
     if (!existingUser) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    // Cập nhật thông tin người dùng
     const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: {
