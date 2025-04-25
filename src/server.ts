@@ -3,6 +3,7 @@ import prisma from "./config/database";
 import authRoute from "./routes/authRoutes";
 import authMiddleware from "./middlewares/auth.middleware";
 import userRouter from './routes/authRoutes';
+import userRoutes from './routes/userRoutes';
 import cors from "cors";
 
 const app: express.Application = express();
@@ -17,8 +18,9 @@ app.use(cors({
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
-app.use(authMiddleware)
+// app.use(authMiddleware)
 app.use('/api/auth', userRouter);
+app.use('/api/users', userRoutes);
 app.get("/get_users", async (req: Request, res: Response) => {
   const users = await prisma.user.findMany();
   res.status(200).json({
