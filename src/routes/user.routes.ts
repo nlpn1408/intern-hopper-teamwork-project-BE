@@ -3,7 +3,7 @@ import userController from '../controllers/user.controller';
 
 const router = Router();
 
-router.get('/', userController.getAllUsers);     // GET danh sách
-router.delete('/users/:id', userController.deleteUser); // DELETE theo id
+router.get('/', userController.getAllUsers);    
+router.delete('/users/:id', userController.deleteUser); 
 
 export default router;

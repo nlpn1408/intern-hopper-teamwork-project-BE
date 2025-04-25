@@ -8,7 +8,7 @@ import update from './routes/UpdateUserRoutes';
 import cors from "cors";
 
 const app: express.Application = express();
-const port: number = 3001;
+const port: number = 3001; 
 const prefix: string = String(process.env.PREFIX);
 app.use(json());
 app.use(cors({
