@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const getAllUsers = async () => {
   return prisma.user.findMany({
-    where: { deleted: false }, // ❗ Chỉ lấy user chưa bị xóa
+    where: { deleted: false },
     select: {
       id: true,
       username: true,
@@ -11,8 +11,8 @@ export const getAllUsers = async () => {
       role_id: true,
       status: true,
       createdAt: true,
-      updatedAt: true
-    }
+      updatedAt: true,
+    },
   });
 };
 
@@ -25,8 +25,8 @@ export const deleteUserById = async (id: string): Promise<boolean> => {
     where: { id: Number(id) },
     data: {
       deleted: true,
-      updatedAt: new Date()
-    }
+      updatedAt: new Date(),
+    },
   });
 
   return true;
@@ -39,15 +39,17 @@ export const getUserById = async (id: number) => {
       id: true,
       username: true,
       email: true,
-      role: true, // Lấy luôn role (kiểu enum)
+      role: true, 
     },
   });
 
   if (!user) return null;
 
-  return user; // Trả về chỉ thông tin người dùng mà không có trường giả
+  return user; 
 };
 
 export default {
-    deleteUserById,getAllUsers, getUserById
-  };
+  deleteUserById,
+  getAllUsers,
+  getUserById,
+};

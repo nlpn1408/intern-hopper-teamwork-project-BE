@@ -2,10 +2,7 @@ import { Request, Response } from 'express';
 import userService from '../service/user.service';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-
 const prisma = new PrismaClient();
-
-
 export const getAllUsers = async (_req: Request, res: Response) => {
   try {
     const users = await userService.getAllUsers();
@@ -41,14 +38,12 @@ export const getUser = async (req: Request, res: Response) => {
   const user = await userService.getUserById(id);
   if (!user) return res.status(404).json({ message: "User not found" });
 
-  res.json(user); // Trả ra: { id, name, email, role }
+  res.json(user); 
 };
 
 export const updateUser = async (req: Request, res: Response) => {
   const userId = Number(req.params.id);
   const { username, email, role_id, updatedBy, password } = req.body;
-
-  // Kiểm tra dữ liệu đầu vào
   if (!username || !email || !password) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
@@ -78,7 +73,7 @@ export const updateUser = async (req: Request, res: Response) => {
     console.error('Update user error:', error);
     res.status(500).json({ message: 'Internal server error' });
   } finally {
-    await prisma.$disconnect(); // Đảm bảo đóng kết nối Prisma
+    await prisma.$disconnect(); 
   }
 };
 
