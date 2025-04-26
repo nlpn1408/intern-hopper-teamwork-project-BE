@@ -6,6 +6,9 @@ import userRouter from './routes/user.routes';
 import cors from "./middlewares/cors";
 import logger from "./middlewares/logger";
 
+
+
+
 const app: express.Application = express();
 const port: number = 3001; 
 const prefix: string = String(process.env.PREFIX);
