@@ -3,19 +3,18 @@ import prisma from "./config/database";
 import authRouter from "./routes/authRoutes";
 import authMiddleware from "./middlewares/auth.middleware";
 import userRouter from './routes/user.routes';
+import cors from "./middlewares/cors";
+import logger from "./middlewares/logger";
 
 
-import cors from "cors";
+
 
 const app: express.Application = express();
 const port: number = 3001; 
 const prefix: string = String(process.env.PREFIX);
 app.use(json());
-app.use(cors({
-  origin: "*", 
-  methods: ["GET", "POST", "PUT", "DELETE"], 
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
+app.use(cors);
+app.use(logger);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
