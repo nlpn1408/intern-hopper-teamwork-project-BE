@@ -16,7 +16,6 @@ export const loginService = async (email: string, password: string) => {
     if (!userLogin) {
       return null;
     }
-
     const isLogin:boolean = await bcrypt.compare(password, userLogin.password)
     if (isLogin) {
       const payload = {
@@ -45,7 +44,6 @@ export const create = async (email: string, password: string, username: string, 
         })
         return newuser;
     }
-
 
 export default {
     create,

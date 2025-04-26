@@ -6,7 +6,6 @@ import prisma from '../config/database';
 import { CreateUserSchema } from "../validations/user.validation";
 export const loginController = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-
   const accessToken = await loginService(email, password);
   if (accessToken) {
     res.status(200).json({
